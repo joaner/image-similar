@@ -23,16 +23,25 @@ int main(int argc, char *argv[]) {
     gdImageGrayScale(compareImg1);
     gdImageGrayScale(compareImg2);
 
+    int compare = gdImageCompare(compareImg1, compareImg2);
+    printf("gdImageCompare: %d\n", compare);
+
     int sourceColor, targetColor;
-    int x = 8, y;
+    int x = 8, y, match = 0;
     while (x-- > 0) {
         y = 8;
         while (y-- > 0) {
             sourceColor = gdImagePalettePixel(compareImg1, x, y);
             targetColor = gdImagePalettePixel(compareImg2, x, y);
-            printf("color: %d -> %d\n", sourceColor, targetColor);
+            
+            if (sourceColor == targetColor) {
+                match++;
+            }
         }
     }
+
+    float matchPercent = (match/(8*8)) * 100;
+    printf("gdImagePalettePixel: %.2f %%\n", matchPercent);
     
     FILE *output;
     output = fopen("/tmp/result.png", "wb");
