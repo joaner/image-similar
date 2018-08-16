@@ -4,7 +4,7 @@
 int main(int argc, char *argv[]) {
     if (argc < 3) {
         printf("./a.out {source.png} {target.png}\n");
-        exit(1);
+        return 1;
     }
 
     gdImagePtr sourceImg, targetImg;
@@ -26,15 +26,18 @@ int main(int argc, char *argv[]) {
     int compare = gdImageCompare(compareImg1, compareImg2);
     printf("gdImageCompare: %d\n", compare);
 
-    int sourceColor, targetColor;
+    int sourceColor, targetColor, diff;
+    diff = gdImagePalettePixel(compareImg1, 4, 4) - gdImagePalettePixel(compareImg2, 4, 4);
+    printf("center diff: %d\n", diff);
+
     int x = 8, y, match = 0;
     while (x-- > 0) {
         y = 8;
         while (y-- > 0) {
             sourceColor = gdImagePalettePixel(compareImg1, x, y);
             targetColor = gdImagePalettePixel(compareImg2, x, y);
-            
-            if (sourceColor == targetColor) {
+
+            if (sourceColor - targetColor == diff) {
                 match++;
             }
         }
@@ -43,9 +46,6 @@ int main(int argc, char *argv[]) {
     float matchPercent = (match/(8*8)) * 100;
     printf("gdImagePalettePixel: %.2f %%\n", matchPercent);
     
-    FILE *output;
-    output = fopen("/tmp/result.png", "wb");
-    gdImagePng(compareImg1, output);
-    fclose(output);
     gdImageDestroy(compareImg1);
+    gdImageDestroy(compareImg2);
 }
