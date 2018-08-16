@@ -1,4 +1,5 @@
 #include "gd.h"
+#include "./debug.h"
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
@@ -47,6 +48,8 @@ int main(int argc, char *argv[]) {
     float matchPercent = (match/(8*8)) * 100;
     printf("gdImagePalettePixel: %.2f %%\n", matchPercent);
     
+    debug(compareImg1, compareImg2);
+
     gdImageDestroy(compareImg1);
     gdImageDestroy(compareImg2);
 
