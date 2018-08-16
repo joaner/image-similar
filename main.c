@@ -25,6 +25,10 @@ int main(int argc, char *argv[]) {
     gdImageGrayScale(compareImg1);
     gdImageGrayScale(compareImg2);
 
+    // 设置分辨率
+    gdImageSetResolution(compareImg1, 8, 8);
+    gdImageSetResolution(compareImg2, 8, 8);
+
     int compare = gdImageCompare(compareImg1, compareImg2);
     printf("gdImageCompare: %d\n", compare);
 

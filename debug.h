@@ -14,8 +14,6 @@ char* readfile(FILE *fp)
     fread(buffer, 1, fsize, fp);
     fclose(fp);
 
-    printf("filesize: %d\n", fsize);
-
     const unsigned char *content = buffer;
 
     return g_base64_encode(content, fsize);
