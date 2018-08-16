@@ -5,8 +5,10 @@ Compare two images of different size are similar
 
 ```bash
 $ ./image-similar test/chrome_48.png test/chrome_32.png
-true
+$ echo $?
 ```
+
+if images are similar, return code is `200`, or else return `201`.
 
 ## Install
 

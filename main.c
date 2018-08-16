@@ -6,6 +6,7 @@ int main(int argc, char *argv[]) {
         printf("./a.out {source.png} {target.png}\n");
         return 1;
     }
+    float minPercent = 0.9;
 
     gdImagePtr sourceImg, targetImg;
     sourceImg = gdImageCreateFromFile(argv[1]);
@@ -48,4 +49,10 @@ int main(int argc, char *argv[]) {
     
     gdImageDestroy(compareImg1);
     gdImageDestroy(compareImg2);
+
+    if (matchPercent > minPercent) {
+        return 200;
+    } else {
+        return 201;
+    }
 }
