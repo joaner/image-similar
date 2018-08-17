@@ -14,9 +14,7 @@ char* readfile(FILE *fp)
     fread(buffer, 1, fsize, fp);
     fclose(fp);
 
-    const unsigned char *content = buffer;
-
-    return g_base64_encode(content, fsize);
+    return g_base64_encode((const unsigned char*)buffer, fsize);
 }
 
 void debug(gdImagePtr sourceImg, gdImagePtr targetImg)
