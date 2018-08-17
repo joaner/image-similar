@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
     gdImageCopyResized(compareImg2, targetImg, 0, 0, 0, 0, 8, 8, gdImageSX(targetImg), gdImageSY(targetImg));
 
     // 缩小到灰度 最多64种色彩
-    gdImageGrayScale(compareImg1);
-    gdImageGrayScale(compareImg2);
+    // gdImageGrayScale(compareImg1);
+    // gdImageGrayScale(compareImg2);
 
     // 设置分辨率
     gdImageSetResolution(compareImg1, 8, 8);
