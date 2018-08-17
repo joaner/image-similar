@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     float minPercent = 0.9;
-    int size = 8;
+    int size = 4;
 
     const int width = size;
     const int height = size;
@@ -26,8 +26,8 @@ int main(int argc, char *argv[]) {
     gdImageCopyResized(compareImg2, targetImg, 0, 0, 0, 0, width, height, gdImageSX(targetImg), gdImageSY(targetImg));
 
     // 缩小到灰度 最多64种色彩
-    gdImageGrayScale(compareImg1);
-    gdImageGrayScale(compareImg2);
+    // gdImageGrayScale(compareImg1);
+    // gdImageGrayScale(compareImg2);
 
     // 设置分辨率
     gdImageSetResolution(compareImg1, width, height);
@@ -37,25 +37,23 @@ int main(int argc, char *argv[]) {
     printf("gdImageCompare: %d\n", compare);
 
     int sourceColor, targetColor, diff;
-    diff = gdImagePalettePixel(compareImg1, width/2, height/2) - gdImagePalettePixel(compareImg2, width/2, height/2);
-    printf("center diff: %d\n", diff);
-
     int x = width, y, match = 0;
+
     while (x-- > 0) {
         y = height;
         while (y-- > 0) {
             sourceColor = gdImagePalettePixel(compareImg1, x, y);
             targetColor = gdImagePalettePixel(compareImg2, x, y);
 
-            // printf("(%d,%d) %d - %d = %d\n", x, y, sourceColor, targetColor, sourceColor - targetColor);
-            if (sourceColor - targetColor == diff) {
+            diff = sourceColor - targetColor;
+            if (diff > -2 && diff < 2) {
                 match++;
             }
         }
     }
 
-    float matchPercent = (match/(width*height)) * 100;
-    printf("gdImagePalettePixel: %.2f %%\n", matchPercent);
+    double matchPercent = (100 * match) / (width * height);
+    printf("gdImagePalettePixel: %.1f %%\n", matchPercent);
     
     debug(compareImg1, compareImg2);
 
