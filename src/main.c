@@ -1,14 +1,21 @@
 #include "gd.h"
 #include "./debug.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
-        printf("./a.out {source.png} {target.png}\n");
+        printf("./a.out {source.png} {target.png} {size}\n");
         return 1;
     }
+
     float minPercent = 0.9;
-    int size = 4;
+    int size = 8;
+    if (argc > 3) {
+        char *p;
+        size = (int) strtol(argv[3], &p, 10);
+        printf("size: %d\n", size);
+    }
 
     const int width = size;
     const int height = size;
