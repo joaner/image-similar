@@ -44,7 +44,9 @@ int main(int argc, char *argv[]) {
     printf("gdImageCompare: %d\n", compare);
 
     int sourceColor, targetColor, diff;
-    int x = width, y, match = 0;
+    int x = width, y, match = 0, i = 0;
+    int count = width * height;
+    int sourceColors[count], targetColors[count];
 
     while (x-- > 0) {
         y = height;
@@ -56,8 +58,21 @@ int main(int argc, char *argv[]) {
             if (diff > -2 && diff < 2) {
                 match++;
             }
+            sourceColors[i] = sourceColor;
+            targetColors[i] = targetColor;
+
+            i++;
         }
     }
+
+    int sourceColorSummary = 0, targetColorSummary = 0;
+    for (;i-->0;) {
+        sourceColorSummary += sourceColors[i];
+        targetColorSummary += targetColors[i];
+    }
+
+    printf("summary: %d %d\n", sourceColorSummary, targetColorSummary);
+    printf("average: %d %d\n", sourceColorSummary/count, targetColorSummary/count);
 
     double matchPercent = (100 * match) / (width * height);
     printf("gdImagePalettePixel: %.1f %%\n", matchPercent);
